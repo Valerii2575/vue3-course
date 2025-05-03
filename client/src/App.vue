@@ -2,7 +2,12 @@
     <div class="app">
         <div class="title">
             <h1>My Blog</h1>
-            <my-button @click="showDialog = true">Add Post</my-button>
+            <div class="app__btns">
+                <my-button @click="showDialog = true">Add Post</my-button>
+                <mySelect v-model="selectedSort"
+                            :options="sortOptions"></mySelect>
+            </div>
+            
         </div>
         <div class="container">            
             <h4>Post List</h4>
@@ -15,7 +20,7 @@
         
         </div>``
         <post-list 
-            :posts="posts"
+            :posts="sortedPosts"
             @remove="removePost"
             v-if="!isPostLoading"
             >
@@ -41,11 +46,26 @@ export default {
         return {
             posts: [],
             showDialog: false,
-            isPostLoading: false
+            isPostLoading: false,
+            selectedSort: '',
+            sortOptions: [
+                { value: 'title', name: 'By Title' },
+                { value: 'description', name: 'By Description' }
+            ]
         }
     },
     mounted() {
         this.fetchPosts();
+    },
+    computed: {
+        sortedPosts() {
+            return [...this.posts].sort((a, b) => {
+                return a[this.selectedSort]?.localeCompare(b[this.selectedSort]);
+            });
+        }
+    },
+    watch: {
+
     },
     methods: {
         handleAddPost(post) {
@@ -109,5 +129,10 @@ export default {
     font-size: 1.5rem;
     color: #333;
     margin-bottom: 20px;
+}
+
+.app__btns{
+    display: flex;
+    justify-content: space-between;
 }
 </style>
