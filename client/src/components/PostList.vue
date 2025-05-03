@@ -1,8 +1,10 @@
 <template>
     <div>
-        <post-item  v-for="post in posts" :key="post.id"
+        <transition-group name="post-list">
+            <post-item  v-for="post in posts" :key="post.id"
             :post="post"
             @remove="$emit('remove', post)"/>
+        </transition-group>        
     </div>   
 </template>
 <script>
@@ -34,5 +36,25 @@
     font-size: 1.5rem;
     color: #333;
     margin-bottom: 20px;
+}
+
+.post-list{
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.posrt-list-enter-active, 
+.post-list-leave-active {
+    transition: all 0.5s ease;
+}
+.post-list-enter, 
+.post-list-leave-to /* .post-list-leave-active in <2.1.8 */ {
+    opacity: 0;
+    transform: translateX(130px);
+}
+
+.post-list-move{
+    transition: all 0.7s ease;
+    transform: translateY(130px);
 }
 </style>
