@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <span v-html="getMessage()"></span>
+        <p>Lucky number: {{ getRandomLuckyNumber() }}</p>
+        <p v-once>Lucky number: {{ getRandomLuckyNumber() }}</p>
+        <div v-show="employee.isHasCreditCard">
+            <h2>Employee</h2>
+            <p>Name: {{ employee.name}}</p>
+            <p>Age: {{ employee.age}}</p>
+            <p>Salary: {{ employee.salary}}</p>
+            <p v-if="employee.isHasCorporasteCard">Corporate balance: {{ employee.corporateBalance}}</p>
+            <p v-else>Doesn't has corporate card</p>
+            <ul>
+                <li v-for="(project, index) in employee.projects">{{++index}}. {{project.project}} - {{project.timeline}}</li>
+            </ul>
+        </div>
+        <ul>
+            <li v-for="(value, key) in employee">
+                <span>{{key}}: {{value}}</span>
+            </li>
+        </ul>
+
+        <p v-for="(number, index) in luckyNumbers">{{++index}}. Number: {{number}}</p>
+    </div>
+</body>
+<script>
+    const { createApp, ref} = Vue;
+
+    createApp({
+        setup(){
+            const message = "Hello Vue3";
+            const luckyNumber = ref(7);
+            const luckyNumbers = [3, 7, 9, 11];
+            const employee = {
+                name: "John",
+                age: 30,
+                salary: 30000,
+                corporateBalance: 100000,
+                isHasCreditCard: true,
+                isHasCorporasteCard: false,
+                projects: [
+                    {project: "Grean A", timeline: "2 years"},
+                    {project: "Grean B", timeline: "3 years"},
+                    {project: "Grean C", timeline: "9 years"},
+                ]
+            };
+
+            function getRandomLuckyNumber(){
+                return Math.floor(Math.random()*10) + 1;
+            };
+
+            function getMessage(){
+                return `<h1>${message}</h1>`
+            }
+
+
+            return {
+                getMessage,
+                luckyNumber,
+                employee,
+                luckyNumbers,
+                getRandomLuckyNumber
+            }
+        }
+    }).mount("#app")
+</script>
+</html>
