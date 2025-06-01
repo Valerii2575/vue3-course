@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+</head>
+<body>
+    <div id="app">
+        <div v-bind:style="{backgroundColor: 'aqua', fontSize: '40px'}">
+            Hello world
+        </div>
+        <div v-bind:style="{'background-color': 'aqua', 'font-size': '40px'}">
+            Hello world
+        </div>
+        <div v-bind:style="{backgroundColor: 'aqua', fontSize: fontSizeTemp +'px'}">
+            Hello world
+        </div>
+        <div v-bind:class="{h1:true}">
+            Hello world
+        </div>
+        <div :class="{h1:true}">
+            Hello world
+        </div>
+    </div>
+</body>
+<script>
+    const { createApp, ref, reactive} = Vue;
+    const fontSizeTemp = 60;
+    createApp({
+        setup(){
+            return {
+                fontSizeTemp
+            };
+        }
+
+    }).mount('#app')
+</script>
+<style scoped>
+    /* .... some classes .....*/
+    .h1 {
+        font-size: 60px;
+        color: green;
+    }
+</style>
+</html>
